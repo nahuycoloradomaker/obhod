@@ -1,0 +1,2 @@
+e:\obhod\dist\obhod.pdb
+e:\obhod\dist\obhod.exe

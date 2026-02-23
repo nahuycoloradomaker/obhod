@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>obhod</AssemblyName>
+    <RootNamespace>obhod</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <Version>1.0.0</Version>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\*.png" />
+    <Resource Include="Resources\*.ico" />
+    <EmbeddedResource Include="Resources\obhod_core.exe" />
+    <EmbeddedResource Include="Resources\cygwin1.dll" />
+    <EmbeddedResource Include="Resources\WinDivert.dll" />
+    <EmbeddedResource Include="Resources\WinDivert64.sys" />
+    <EmbeddedResource Include="Resources\quic_initial_www_google_com.bin" />
+    <EmbeddedResource Include="Resources\tls_clienthello_www_google_com.bin" />
+    <EmbeddedResource Include="Resources\tls_clienthello_4pda_to.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Json" Version="10.0.3" />
+  </ItemGroup>
+</Project>
