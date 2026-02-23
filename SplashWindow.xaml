@@ -1,4 +1,4 @@
-<Window x:Class="obhod.SplashWindow"
+﻿<Window x:Class="obhod.SplashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="obhod" Icon="pack://application:,,,/Resources/icon.ico"
@@ -28,19 +28,15 @@
             </Border.Effect>
 
             <Grid>
-                <!-- Logo + Text stacked vertically with proper spacing -->
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     
-                    <!-- App Logo SVG draw animation - BIG -->
                     <Canvas Width="160" Height="160" HorizontalAlignment="Center">
-                        <!-- Circle arc -->
                         <Path x:Name="CirclePath"
                               Data="M80,10 A70,70 0 1,0 150,80"
                               Stroke="#E0E0F0" StrokeThickness="4" Fill="Transparent"
                               StrokeDashArray="500" StrokeDashOffset="500"
                               StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
 
-                        <!-- Diagonal line -->
                         <Path x:Name="ArrowPath"
                               Data="M80,80 L145,15"
                               Stroke="#E0E0F0" StrokeThickness="4" Fill="Transparent"
@@ -49,19 +45,16 @@
                               Opacity="0"/>
                     </Canvas>
 
-                    <!-- Title -->
                     <TextBlock x:Name="TitleText" Text="obhod" FontSize="32" FontWeight="Bold" 
                                Foreground="#E0E0F0" HorizontalAlignment="Center" Margin="0,20,0,0"
                                FontFamily="Segoe UI Variable,Segoe UI" Opacity="0"/>
 
-                    <!-- Version badge -->
                     <Border x:Name="VersionBadge" CornerRadius="4" Background="#08FFFFFF" BorderBrush="#10FFFFFF" 
                             BorderThickness="1" Padding="10,3" Margin="0,10,0,0" HorizontalAlignment="Center" Opacity="0">
-                        <TextBlock Text="v1.2 · premium bypass" FontSize="10" Foreground="#30FFFFFF" 
+                        <TextBlock Text="v1.2 В· premium bypass" FontSize="10" Foreground="#30FFFFFF" 
                                    FontWeight="Medium" FontFamily="Segoe UI Variable,Segoe UI"/>
                     </Border>
 
-                    <!-- Minimal spinning ring loader -->
                     <Grid Width="20" Height="20" Margin="0,35,0,0" HorizontalAlignment="Center">
                         <Ellipse Width="20" Height="20" Stroke="#0CFFFFFF" StrokeThickness="1.5" Fill="Transparent"/>
                         <Path x:Name="Spinner" Data="M10,0 A10,10 0 0,1 20,10" 
@@ -73,13 +66,12 @@
                         </Path>
                     </Grid>
 
-                    <TextBlock x:Name="StatusText" Text="Инициализация..." FontSize="10" Foreground="#20FFFFFF" 
+                    <TextBlock x:Name="StatusText" Text="РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ..." FontSize="10" Foreground="#20FFFFFF" 
                                FontWeight="Medium" HorizontalAlignment="Center" Margin="0,10,0,0" 
                                FontFamily="Segoe UI Variable,Segoe UI" Opacity="0"/>
                 </StackPanel>
 
-                <!-- Bottom -->
-                <TextBlock x:Name="BottomText" Text="zapret engine · open source" Foreground="#10FFFFFF" FontSize="10" 
+                <TextBlock x:Name="BottomText" Text="zapret engine В· open source" Foreground="#10FFFFFF" FontSize="10" 
                            FontFamily="Segoe UI Variable,Segoe UI" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                            Margin="0,0,0,18" Opacity="0"/>
             </Grid>
@@ -90,7 +82,6 @@
         <EventTrigger RoutedEvent="Window.Loaded">
             <BeginStoryboard>
                 <Storyboard>
-                    <!-- Window fade in + slide -->
                     <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4">
                         <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
@@ -99,13 +90,11 @@
                         <ThicknessAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction>
                     </ThicknessAnimation>
 
-                    <!-- Circle arc draws smoothly -->
                     <DoubleAnimation Storyboard.TargetName="CirclePath" Storyboard.TargetProperty="StrokeDashOffset"
                                      From="500" To="0" BeginTime="0:0:0.2" Duration="0:0:0.8">
                         <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Line draws right after circle, overlapping slightly -->
                     <DoubleAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="Opacity"
                                      From="0" To="1" BeginTime="0:0:0.8" Duration="0:0:0.05"/>
                     <DoubleAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="StrokeDashOffset"
@@ -113,27 +102,22 @@
                         <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Title slides up and fades in -->
                     <DoubleAnimation Storyboard.TargetName="TitleText" Storyboard.TargetProperty="Opacity"
                                      From="0" To="1" BeginTime="0:0:1" Duration="0:0:0.35">
                         <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Version badge -->
                     <DoubleAnimation Storyboard.TargetName="VersionBadge" Storyboard.TargetProperty="Opacity"
                                      From="0" To="1" BeginTime="0:0:1.15" Duration="0:0:0.3">
                         <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Spinner starts smoothly -->
                     <DoubleAnimation Storyboard.TargetName="SpinnerRotate" Storyboard.TargetProperty="Angle"
                                      From="0" To="360" BeginTime="0:0:1.3" Duration="0:0:1" RepeatBehavior="Forever"/>
 
-                    <!-- Status text -->
                     <DoubleAnimation Storyboard.TargetName="StatusText" Storyboard.TargetProperty="Opacity"
                                      From="0" To="1" BeginTime="0:0:1.3" Duration="0:0:0.3"/>
 
-                    <!-- Bottom text -->
                     <DoubleAnimation Storyboard.TargetName="BottomText" Storyboard.TargetProperty="Opacity"
                                      From="0" To="1" BeginTime="0:0:1.5" Duration="0:0:0.4"/>
                 </Storyboard>

@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Security.Principal;
 
 namespace obhod;
@@ -26,19 +26,16 @@ public partial class App : Application
             return;
         }
 
-        // Показываем неоновое интро
         _ = ShowSplashAndStart();
     }
 
     private async Task ShowSplashAndStart()
     {
-        // Отключаем автоматическое закрытие при закрытии первого окна
         Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
         var splash = new SplashWindow();
         splash.Show();
         
-        // Время на "полюбоваться" неонкой
         await Task.Delay(3500);
         
         var main = new MainWindow();
@@ -47,7 +44,6 @@ public partial class App : Application
         
         splash.Close();
 
-        // Возвращаем нормальный режим: выход при закрытии главного окна
         Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
     }
 

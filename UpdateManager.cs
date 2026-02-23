@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -11,7 +11,6 @@ namespace obhod
 {
     public class UpdateManager
     {
-        // ЗАМЕНИТЕ ЭТИ ЗНАЧЕНИЯ НА ВАШИ ПОСЛЕ СОЗДАНИЯ РЕПОЗИТОРИЯ
         private const string GITHUB_USER = "nahuycoloradomaker";
         private const string GITHUB_REPO = "obhod";
         private const string API_URL = $"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/releases/latest";
@@ -32,8 +31,8 @@ namespace obhod
                 if (latestVersion > currentVersion)
                 {
                     var result = MessageBox.Show(
-                        $"Доступна новая версия {release.TagName}!\n\nХотите обновиться сейчас? Приложение будет перезапущено.",
-                        "Обновление",
+                        $"Р”РѕСЃС‚СѓРїРЅР° РЅРѕРІР°СЏ РІРµСЂСЃРёСЏ {release.TagName}!\n\nРҐРѕС‚РёС‚Рµ РѕР±РЅРѕРІРёС‚СЊСЃСЏ СЃРµР№С‡Р°СЃ? РџСЂРёР»РѕР¶РµРЅРёРµ Р±СѓРґРµС‚ РїРµСЂРµР·Р°РїСѓС‰РµРЅРѕ.",
+                        "РћР±РЅРѕРІР»РµРЅРёРµ",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Information);
 
@@ -52,7 +51,6 @@ namespace obhod
             }
             catch
             {
-                // Игнорируем ошибки сети или API, чтобы не мешать работе приложения
             }
         }
 
@@ -71,7 +69,6 @@ namespace obhod
                 string currentExe = Process.GetCurrentProcess().MainModule?.FileName ?? "";
                 if (string.IsNullOrEmpty(currentExe)) return;
 
-                // Создаем batch-файл для замены EXE после закрытия приложения
                 string batchPath = Path.Combine(Path.GetTempPath(), "update_obhod.bat");
                 string batchContent = $@"
 @echo off
@@ -100,7 +97,7 @@ del ""%~f0""
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при обновлении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё: {ex.Message}", "РћС€РёР±РєР°", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

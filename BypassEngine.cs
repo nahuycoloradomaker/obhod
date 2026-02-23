@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -55,7 +55,7 @@ public class BypassEngine : IDisposable
     {
         try
         {
-            _log("Извлекаю файлы...", LogLevel.Info);
+            _log("РР·РІР»РµРєР°СЋ С„Р°Р№Р»С‹...", LogLevel.Info);
 
             string? dir = null;
             try
@@ -64,13 +64,13 @@ public class BypassEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _log($"Ошибка извлечения: {ex.Message}", LogLevel.Error);
+                _log($"РћС€РёР±РєР° РёР·РІР»РµС‡РµРЅРёСЏ: {ex.Message}", LogLevel.Error);
                 return false;
             }
 
             if (dir == null)
             {
-                _log("Не удалось извлечь файлы.", LogLevel.Error);
+                _log("РќРµ СѓРґР°Р»РѕСЃСЊ РёР·РІР»РµС‡СЊ С„Р°Р№Р»С‹.", LogLevel.Error);
                 return false;
             }
 
@@ -79,11 +79,11 @@ public class BypassEngine : IDisposable
 
             if (!File.Exists(winws))
             {
-                _log("obhod_core.exe не найден.", LogLevel.Error);
+                _log("obhod_core.exe РЅРµ РЅР°Р№РґРµРЅ.", LogLevel.Error);
                 return false;
             }
 
-            _log("Формирую конфигурацию...", LogLevel.Info);
+            _log("Р¤РѕСЂРјРёСЂСѓСЋ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ...", LogLevel.Info);
 
             string args;
             try
@@ -92,17 +92,17 @@ public class BypassEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _log($"Ошибка формирования аргументов: {ex.Message}", LogLevel.Error);
+                _log($"РћС€РёР±РєР° С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ Р°СЂРіСѓРјРµРЅС‚РѕРІ: {ex.Message}", LogLevel.Error);
                 return false;
             }
 
             if (string.IsNullOrEmpty(args))
             {
-                _log("Пустая конфигурация.", LogLevel.Error);
+                _log("РџСѓСЃС‚Р°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ.", LogLevel.Error);
                 return false;
             }
 
-            _log("Запускаю движок...", LogLevel.Info);
+            _log("Р—Р°РїСѓСЃРєР°СЋ РґРІРёР¶РѕРє...", LogLevel.Info);
 
             bool ok;
             try
@@ -111,20 +111,20 @@ public class BypassEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _log($"Ошибка запуска движка: {ex.Message}", LogLevel.Error);
+                _log($"РћС€РёР±РєР° Р·Р°РїСѓСЃРєР° РґРІРёР¶РєР°: {ex.Message}", LogLevel.Error);
                 return false;
             }
 
             if (ok)
-                _log("Обход активен.", LogLevel.Success);
+                _log("РћР±С…РѕРґ Р°РєС‚РёРІРµРЅ.", LogLevel.Success);
             else
-                _log("Движок не запустился. Проверьте права администратора.", LogLevel.Error);
+                _log("Р”РІРёР¶РѕРє РЅРµ Р·Р°РїСѓСЃС‚РёР»СЃСЏ. РџСЂРѕРІРµСЂСЊС‚Рµ РїСЂР°РІР° Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°.", LogLevel.Error);
 
             return ok;
         }
         catch (Exception ex)
         {
-            _log($"Непредвиденная ошибка: {ex.Message}", LogLevel.Error);
+            _log($"РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР°: {ex.Message}", LogLevel.Error);
             return false;
         }
     }
@@ -133,14 +133,14 @@ public class BypassEngine : IDisposable
     {
         try
         {
-            _log("Останавливаю...", LogLevel.Info);
+            _log("РћСЃС‚Р°РЅР°РІР»РёРІР°СЋ...", LogLevel.Info);
             await _procManager.StopAllAsync();
             Cleanup();
-            _log("Сеть восстановлена.", LogLevel.Success);
+            _log("РЎРµС‚СЊ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅР°.", LogLevel.Success);
         }
         catch (Exception ex)
         {
-            _log($"Ошибка: {ex.Message}", LogLevel.Warn);
+            _log($"РћС€РёР±РєР°: {ex.Message}", LogLevel.Warn);
         }
     }
 
@@ -169,7 +169,7 @@ public class BypassEngine : IDisposable
             using var stream = asm.GetManifestResourceStream(res);
             if (stream == null)
             {
-                _log($"Ресурс отсутствует: {name}", LogLevel.Warn);
+                _log($"Р РµСЃСѓСЂСЃ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚: {name}", LogLevel.Warn);
                 continue;
             }
             using var fs = File.Create(path);
@@ -224,14 +224,12 @@ public class BypassEngine : IDisposable
 
         if (hasDiscord)
         {
-            // Discord Voice / STUN UDP
             strategies.Add(
                 "--filter-udp=19294-19344,50000-65535 " +
                 "--filter-l7=discord,stun " +
                 "--dpi-desync=fake --dpi-desync-repeats=6"
             );
 
-            // Discord Media TCP
             strategies.Add(
                 "--filter-tcp=2053,2083,2087,2096,8443 " +
                 $"--hostlist-domains={DiscordDomains} " +
@@ -240,7 +238,6 @@ public class BypassEngine : IDisposable
                 $"--dpi-desync-split-seqovl-pattern={tlsG}"
             );
 
-            // Discord General HTTPS TCP / WebSockets
             strategies.Add(
                 "--filter-tcp=80,443 " +
                 $"--hostlist-domains={DiscordDomains} " +
@@ -249,7 +246,6 @@ public class BypassEngine : IDisposable
                 $"--dpi-desync-split-seqovl-pattern={tls4}"
             );
 
-            // Discord QUIC UDP
             strategies.Add(
                 "--filter-udp=443 " +
                 $"--hostlist-domains={DiscordDomains} " +
@@ -260,7 +256,6 @@ public class BypassEngine : IDisposable
 
         if (hasYoutube)
         {
-            // YouTube TCP
             strategies.Add(
                 "--filter-tcp=443 " +
                 $"--hostlist-domains={YouTubeDomains} --ip-id=zero " +
@@ -269,7 +264,6 @@ public class BypassEngine : IDisposable
                 $"--dpi-desync-split-seqovl-pattern={tlsG}"
             );
 
-            // YouTube QUIC UDP
             strategies.Add(
                 "--filter-udp=443 " +
                 $"--hostlist-domains={YouTubeDomains} " +
@@ -280,7 +274,6 @@ public class BypassEngine : IDisposable
 
         if (hasHttps)
         {
-            // General HTTPS TCP (80, 443, 8443 in flowseal's alternative rule)
             strategies.Add(
                 "--filter-tcp=80,443,8443 " +
                 $"--hostlist-domains={GeneralDomains} " +
@@ -292,7 +285,6 @@ public class BypassEngine : IDisposable
 
         if (hasRoblox)
         {
-            // Flowseal "GameFilter" TCP rule
             strategies.Add(
                 "--filter-tcp=1024-65535 " +
                 $"--hostlist-domains={RobloxDomains} " +
@@ -301,7 +293,6 @@ public class BypassEngine : IDisposable
                 $"--dpi-desync-split-seqovl-pattern={tls4}"
             );
 
-            // Flowseal "GameFilter" UDP rule
             strategies.Add(
                 "--filter-udp=1024-65535 " +
                 $"--hostlist-domains={RobloxDomains} " +
@@ -312,8 +303,6 @@ public class BypassEngine : IDisposable
 
         if (hasQuic)
         {
-            // Standalone QUIC if selected, applied to GeneralDomains or specific ones?
-            // The user had a QUIC logic before, let's keep it scoped to GeneralDomains.
             strategies.Add(
                 "--filter-udp=443 " +
                 $"--hostlist-domains={GeneralDomains} " +

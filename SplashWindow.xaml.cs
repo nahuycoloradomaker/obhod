@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Threading.Tasks;
 
 namespace obhod
@@ -15,7 +15,6 @@ namespace obhod
             var splash = new SplashWindow();
             splash.Show();
             
-            // Задержка для красоты интро
             await Task.Delay(3000);
             
             splash.Close();

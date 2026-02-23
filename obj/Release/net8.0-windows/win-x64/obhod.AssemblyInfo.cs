@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("obhod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0+a0cefeb49a982a67e17b731a169f3a3a9d93758c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0+c42c37ab97c63506e7519b24c7165f3ec95297db")]
 [assembly: System.Reflection.AssemblyProductAttribute("obhod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("obhod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.2.0.0")]

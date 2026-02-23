@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 
 namespace obhod;
@@ -24,7 +24,7 @@ public class ProcessManager
             {
                 if (!File.Exists(exe))
                 {
-                    _log($"Файл не найден: {exe}", LogLevel.Error);
+                    _log($"Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ: {exe}", LogLevel.Error);
                     return false;
                 }
 
@@ -41,8 +41,6 @@ public class ProcessManager
 
                 var proc = new Process { StartInfo = psi };
 
-                // We must read the streams to prevent buffer overflow (deadlock),
-                // but we intentionally DO NOT log them to avoid freezing the UI.
                 proc.OutputDataReceived += (_, _) => { };
                 proc.ErrorDataReceived += (_, _) => { };
 
@@ -58,15 +56,15 @@ public class ProcessManager
                     {
                         int code = -1;
                         try { code = proc.ExitCode; } catch { }
-                        _log($"Движок упал при старте (код {code})", LogLevel.Error);
-                        _log("Возможно антивирус заблокировал файлы WinDivert", LogLevel.Warn);
+                        _log($"Р”РІРёР¶РѕРє СѓРїР°Р» РїСЂРё СЃС‚Р°СЂС‚Рµ (РєРѕРґ {code})", LogLevel.Error);
+                        _log("Р’РѕР·РјРѕР¶РЅРѕ Р°РЅС‚РёРІРёСЂСѓСЃ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°Р» С„Р°Р№Р»С‹ WinDivert", LogLevel.Warn);
                         try { proc.Dispose(); } catch { }
                         return false;
                     }
                 }
                 catch
                 {
-                    _log("Не удалось проверить статус движка", LogLevel.Error);
+                    _log("РќРµ СѓРґР°Р»РѕСЃСЊ РїСЂРѕРІРµСЂРёС‚СЊ СЃС‚Р°С‚СѓСЃ РґРІРёР¶РєР°", LogLevel.Error);
                     try { proc.Dispose(); } catch { }
                     return false;
                 }
@@ -76,12 +74,12 @@ public class ProcessManager
                     _proc = proc;
                 }
 
-                _log($"Движок запущен, PID {proc.Id}", LogLevel.Success);
+                _log($"Р”РІРёР¶РѕРє Р·Р°РїСѓС‰РµРЅ, PID {proc.Id}", LogLevel.Success);
                 return true;
             }
             catch (Exception ex)
             {
-                _log($"Ошибка запуска: {ex.Message}", LogLevel.Error);
+                _log($"РћС€РёР±РєР° Р·Р°РїСѓСЃРєР°: {ex.Message}", LogLevel.Error);
                 return false;
             }
         });

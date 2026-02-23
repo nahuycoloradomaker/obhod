@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -20,9 +20,8 @@ public partial class MainWindow : Window
         _engine = new BypassEngine(Log);
         Closing += OnClose;
         UpdatePresetLabel();
-        Log("obhod готов к работе.", LogLevel.Info);
+        Log("obhod РіРѕС‚РѕРІ Рє СЂР°Р±РѕС‚Рµ.", LogLevel.Info);
         
-        // Фоновая проверка обновлений
         _ = UpdateManager.CheckForUpdatesAsync();
     }
 
@@ -51,7 +50,7 @@ public partial class MainWindow : Window
         {
             _running = false;
             try { MainToggle.IsChecked = false; } catch { }
-            SetStatus(false, "Ошибка", "попробуйте снова");
+            SetStatus(false, "РћС€РёР±РєР°", "РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°");
         }
 
         _busy = false;
@@ -66,12 +65,12 @@ public partial class MainWindow : Window
         var presets = ActivePresets();
         if (presets.Count == 0)
         {
-            Log("Выберите хотя бы один сервис.", LogLevel.Warn);
+            Log("Р’С‹Р±РµСЂРёС‚Рµ С…РѕС‚СЏ Р±С‹ РѕРґРёРЅ СЃРµСЂРІРёСЃ.", LogLevel.Warn);
             MainToggle.IsChecked = false;
             return;
         }
 
-        SetStatus(false, "Запуск...", "подождите");
+        SetStatus(false, "Р—Р°РїСѓСЃРє...", "РїРѕРґРѕР¶РґРёС‚Рµ");
 
         bool ok = false;
         try
@@ -80,26 +79,26 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            Log($"Ошибка: {ex.Message}", LogLevel.Error);
+            Log($"РћС€РёР±РєР°: {ex.Message}", LogLevel.Error);
         }
 
         if (ok)
         {
             _running = true;
             MainToggle.IsChecked = true;
-            SetStatus(true, "Активен", string.Join(" · ", presets.Select(p => char.ToUpper(p[0]) + p[1..])));
+            SetStatus(true, "РђРєС‚РёРІРµРЅ", string.Join(" В· ", presets.Select(p => char.ToUpper(p[0]) + p[1..])));
         }
         else
         {
             _running = false;
             MainToggle.IsChecked = false;
-            SetStatus(false, "Ошибка", "смотрите логи");
+            SetStatus(false, "РћС€РёР±РєР°", "СЃРјРѕС‚СЂРёС‚Рµ Р»РѕРіРё");
         }
     }
 
     private async Task DoStop()
     {
-        SetStatus(false, "Отключение...", "");
+        SetStatus(false, "РћС‚РєР»СЋС‡РµРЅРёРµ...", "");
         try
         {
             await _engine.StopAsync();
@@ -107,7 +106,7 @@ public partial class MainWindow : Window
         catch { }
         _running = false;
         MainToggle.IsChecked = false;
-        SetStatus(false, "Отключён", "Нажмите переключатель");
+        SetStatus(false, "РћС‚РєР»СЋС‡С‘РЅ", "РќР°Р¶РјРёС‚Рµ РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЊ");
     }
 
     private void Preset_Click(object sender, RoutedEventArgs e)
@@ -155,8 +154,8 @@ public partial class MainWindow : Window
         {
             var active = ActivePresets();
             TxtPresetList.Text = active.Count > 0
-                ? string.Join(" · ", active.Select(p => char.ToUpper(p[0]) + p[1..]))
-                : "ничего не выбрано";
+                ? string.Join(" В· ", active.Select(p => char.ToUpper(p[0]) + p[1..]))
+                : "РЅРёС‡РµРіРѕ РЅРµ РІС‹Р±СЂР°РЅРѕ";
         }
         catch { }
     }
@@ -230,10 +229,10 @@ public partial class MainWindow : Window
                     string t = DateTime.Now.ToString("HH:mm:ss");
                     string icon = level switch
                     {
-                        LogLevel.Success => "✓",
-                        LogLevel.Error   => "✗",
+                        LogLevel.Success => "вњ“",
+                        LogLevel.Error   => "вњ—",
                         LogLevel.Warn    => "!",
-                        _                => "·"
+                        _                => "В·"
                     };
                     LogTB.Text += $"[{t}] {icon} {msg}\n";
                     LogSV.ScrollToEnd();
@@ -253,7 +252,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (MessageBox.Show("Удалить приложение и сбросить настройки?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("РЈРґР°Р»РёС‚СЊ РїСЂРёР»РѕР¶РµРЅРёРµ Рё СЃР±СЂРѕСЃРёС‚СЊ РЅР°СЃС‚СЂРѕР№РєРё?", "РЈРґР°Р»РµРЅРёРµ", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 if (_running) await DoStop();
                 _engine.Dispose();
@@ -267,7 +266,7 @@ public partial class MainWindow : Window
                 }
                 catch { }
 
-                MessageBox.Show("Готово.", "obhod", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Р“РѕС‚РѕРІРѕ.", "obhod", MessageBoxButton.OK, MessageBoxImage.Information);
                 Application.Current.Shutdown();
             }
         }
