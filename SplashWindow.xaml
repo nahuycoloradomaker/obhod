@@ -30,40 +30,20 @@
             <Grid>
                 <!-- App Logo SVG draw animation -->
                 <Canvas Width="120" Height="120" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-80,0,0">
-                    <!-- Circle arc (the "obhod" orbit) - draws itself -->
+                    <!-- Circle arc - white -->
                     <Path x:Name="CirclePath"
                           Data="M60,10 A50,50 0 1,0 110,60"
-                          Stroke="#3B52CC" StrokeThickness="3" Fill="Transparent"
+                          Stroke="#D0D0E0" StrokeThickness="2.5" Fill="Transparent"
                           StrokeDashArray="400" StrokeDashOffset="400"
-                          StrokeStartLineCap="Round" StrokeEndLineCap="Round">
-                        <Path.Effect>
-                            <DropShadowEffect Color="#5C7CFF" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
-                        </Path.Effect>
-                    </Path>
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
 
-                    <!-- Arrow (diagonal break-through line) - draws after circle -->
+                    <!-- Diagonal line -->
                     <Path x:Name="ArrowPath"
                           Data="M60,60 L105,15"
-                          Stroke="White" StrokeThickness="3" Fill="Transparent"
+                          Stroke="#D0D0E0" StrokeThickness="2.5" Fill="Transparent"
                           StrokeDashArray="200" StrokeDashOffset="200"
                           StrokeStartLineCap="Round" StrokeEndLineCap="Round"
-                          Opacity="0">
-                        <Path.Effect>
-                            <DropShadowEffect Color="#5C7CFF" BlurRadius="6" ShadowDepth="0" Opacity="0.3"/>
-                        </Path.Effect>
-                    </Path>
-
-                    <!-- Arrow tip -->
-                    <Path x:Name="ArrowTip"
-                          Data="M95,15 L105,15 L105,25"
-                          Stroke="White" StrokeThickness="3" Fill="Transparent"
-                          StrokeDashArray="100" StrokeDashOffset="100"
-                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                          Opacity="0">
-                        <Path.Effect>
-                            <DropShadowEffect Color="#5C7CFF" BlurRadius="6" ShadowDepth="0" Opacity="0.3"/>
-                        </Path.Effect>
-                    </Path>
+                          Opacity="0"/>
                 </Canvas>
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,0,0">
@@ -80,10 +60,10 @@
                     </Border>
 
                     <!-- Minimal spinning ring loader -->
-                    <Grid Width="20" Height="20" Margin="0,30,0,0" HorizontalAlignment="Center">
-                        <Ellipse Width="20" Height="20" Stroke="#10FFFFFF" StrokeThickness="2" Fill="Transparent"/>
-                        <Path x:Name="Spinner" Data="M10,0 A10,10 0 0,1 20,10" 
-                              Stroke="#3B52CC" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    <Grid Width="18" Height="18" Margin="0,28,0,0" HorizontalAlignment="Center">
+                        <Ellipse Width="18" Height="18" Stroke="#0CFFFFFF" StrokeThickness="1.5" Fill="Transparent"/>
+                        <Path x:Name="Spinner" Data="M9,0 A9,9 0 0,1 18,9" 
+                              Stroke="#50FFFFFF" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                               RenderTransformOrigin="0.5,0.5">
                             <Path.RenderTransform>
                                 <RotateTransform x:Name="SpinnerRotate" Angle="0"/>
@@ -109,55 +89,51 @@
             <BeginStoryboard>
                 <Storyboard>
                     <!-- Window fade in + slide -->
-                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5">
-                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4">
+                        <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
                     <ThicknessAnimation Storyboard.TargetName="MainBorder" Storyboard.TargetProperty="Margin" 
-                                        From="18,40,18,0" To="18,18,18,18" Duration="0:0:0.7">
-                        <ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction>
+                                        From="18,35,18,2" To="18,18,18,18" Duration="0:0:0.6">
+                        <ThicknessAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction>
                     </ThicknessAnimation>
 
-                    <!-- Circle arc draws itself (0.3s → 1.3s) -->
+                    <!-- Circle arc draws smoothly -->
                     <DoubleAnimation Storyboard.TargetName="CirclePath" Storyboard.TargetProperty="StrokeDashOffset"
-                                     From="400" To="0" BeginTime="0:0:0.3" Duration="0:0:1">
-                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                     From="400" To="0" BeginTime="0:0:0.2" Duration="0:0:0.8">
+                        <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Arrow line appears and draws -->
+                    <!-- Line draws right after circle, overlapping slightly -->
                     <DoubleAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:1.2" Duration="0:0:0.1"/>
+                                     From="0" To="1" BeginTime="0:0:0.8" Duration="0:0:0.05"/>
                     <DoubleAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="StrokeDashOffset"
-                                     From="200" To="0" BeginTime="0:0:1.2" Duration="0:0:0.4">
-                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                     From="200" To="0" BeginTime="0:0:0.8" Duration="0:0:0.3">
+                        <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Arrow tip draws -->
-                    <DoubleAnimation Storyboard.TargetName="ArrowTip" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:1.5" Duration="0:0:0.1"/>
-                    <DoubleAnimation Storyboard.TargetName="ArrowTip" Storyboard.TargetProperty="StrokeDashOffset"
-                                     From="100" To="0" BeginTime="0:0:1.5" Duration="0:0:0.3">
-                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-
-                    <!-- Title fades in -->
+                    <!-- Title slides up and fades in -->
                     <DoubleAnimation Storyboard.TargetName="TitleText" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:1.6" Duration="0:0:0.4"/>
+                                     From="0" To="1" BeginTime="0:0:1" Duration="0:0:0.35">
+                        <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
 
                     <!-- Version badge -->
                     <DoubleAnimation Storyboard.TargetName="VersionBadge" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:1.8" Duration="0:0:0.3"/>
+                                     From="0" To="1" BeginTime="0:0:1.15" Duration="0:0:0.3">
+                        <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
 
-                    <!-- Spinner rotation (continuous) -->
+                    <!-- Spinner starts smoothly -->
                     <DoubleAnimation Storyboard.TargetName="SpinnerRotate" Storyboard.TargetProperty="Angle"
-                                     From="0" To="360" BeginTime="0:0:2" Duration="0:0:0.8" RepeatBehavior="Forever"/>
+                                     From="0" To="360" BeginTime="0:0:1.3" Duration="0:0:1" RepeatBehavior="Forever"/>
 
                     <!-- Status text -->
                     <DoubleAnimation Storyboard.TargetName="StatusText" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:2" Duration="0:0:0.3"/>
+                                     From="0" To="1" BeginTime="0:0:1.3" Duration="0:0:0.3"/>
 
                     <!-- Bottom text -->
                     <DoubleAnimation Storyboard.TargetName="BottomText" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:2.2" Duration="0:0:0.5"/>
+                                     From="0" To="1" BeginTime="0:0:1.5" Duration="0:0:0.4"/>
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
