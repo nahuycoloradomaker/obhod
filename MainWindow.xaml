@@ -1,4 +1,4 @@
-﻿<Window x:Class="obhod.MainWindow"
+<Window x:Class="obhod.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="obhod" Icon="pack://application:,,,/Resources/icon.ico"
@@ -88,7 +88,7 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button Content="вЂ”" Click="Btn_Min" Width="30" Height="30"
+                        <Button Content="—" Click="Btn_Min" Width="30" Height="30"
                                 Foreground="#555" Background="Transparent"
                                 BorderThickness="0" Cursor="Hand" FontSize="14">
                             <Button.Style>
@@ -124,7 +124,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Content="вњ•" Click="Btn_Close" Width="30" Height="30"
+                        <Button Content="✕" Click="Btn_Close" Width="30" Height="30"
                                 BorderThickness="0" Cursor="Hand" FontSize="12">
                             <Button.Style>
                                 <Style TargetType="Button">
@@ -208,7 +208,7 @@
                         </Grid>
 
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock x:Name="TxtStatus" Text="РћС‚РєР»СЋС‡С‘РЅ"
+                            <TextBlock x:Name="TxtStatus" Text="Отключён"
                                        FontFamily="Segoe UI Variable,Segoe UI" FontSize="14" FontWeight="SemiBold">
                                 <TextBlock.Foreground>
                                     <SolidColorBrush x:Name="StatusTextColor" Color="#60FFFFFF"/>
@@ -216,7 +216,7 @@
                             </TextBlock>
                             <TextBlock x:Name="TxtSub" FontFamily="Segoe UI Variable,Segoe UI" FontSize="11"
                                        Foreground="#30FFFFFF" Margin="0,2,0,0"
-                                       Text="РќР°Р¶РјРёС‚Рµ РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЊ"/>
+                                       Text="Нажмите переключатель"/>
                         </StackPanel>
 
                         <Border Grid.Column="2" CornerRadius="6" Background="#08FFFFFF" Padding="8,3" VerticalAlignment="Center">
@@ -238,11 +238,11 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="РћР±С…РѕРґ Р±Р»РѕРєРёСЂРѕРІРѕРє" Foreground="#E8E8F0"
+                            <TextBlock Text="Обход блокировок" Foreground="#E8E8F0"
                                        FontFamily="Segoe UI Variable,Segoe UI" FontSize="14" FontWeight="SemiBold"/>
                             <TextBlock x:Name="TxtPresetList" Foreground="#35FFFFFF"
                                        FontFamily="Segoe UI Variable,Segoe UI" FontSize="11" Margin="0,3,0,0"
-                                       Text="Discord В· YouTube В· Roblox В· HTTPS"/>
+                                       Text="Discord · YouTube · Roblox · HTTPS"/>
                         </StackPanel>
 
                         <ToggleButton x:Name="MainToggle" Grid.Column="1"
@@ -350,7 +350,7 @@
                         Background="#0CFFFFFF" BorderBrush="#14FFFFFF" BorderThickness="1"
                         Padding="14,12">
                     <StackPanel>
-                        <TextBlock Text="РЎР•Р Р’РРЎР«" Foreground="#25FFFFFF"
+                        <TextBlock Text="СЕРВИСЫ" Foreground="#25FFFFFF"
                                    FontFamily="Segoe UI Variable,Segoe UI" FontSize="10" FontWeight="Bold"
                                    Margin="2,0,0,10"/>
                         <WrapPanel>
@@ -656,11 +656,11 @@
                         <Border Grid.Row="0" CornerRadius="14,14,0,0"
                                 Background="#08FFFFFF" Padding="14,8">
                             <Grid>
-                                <TextBlock Text="Р›РћР“Р" Foreground="#25FFFFFF"
+                                <TextBlock Text="ЛОГИ" Foreground="#25FFFFFF"
                                            FontFamily="Segoe UI Variable,Segoe UI" FontSize="10"
                                            FontWeight="Bold"
                                            VerticalAlignment="Center"/>
-                                <Button Content="РѕС‡РёСЃС‚РёС‚СЊ" HorizontalAlignment="Right"
+                                <Button Content="очистить" HorizontalAlignment="Right"
                                         Foreground="#28FFFFFF" Background="Transparent"
                                         BorderThickness="0" Cursor="Hand"
                                         FontFamily="Segoe UI Variable,Segoe UI" FontSize="10"
@@ -671,7 +671,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="Button">
                                                         <Border x:Name="clearBd" CornerRadius="5" Padding="8,3" Background="#00FFFFFF">
-                                                            <TextBlock x:Name="clearTxt" Text="РѕС‡РёСЃС‚РёС‚СЊ" Foreground="#30FFFFFF"
+                                                            <TextBlock x:Name="clearTxt" Text="очистить" Foreground="#30FFFFFF"
                                                                        FontFamily="Segoe UI Variable,Segoe UI" FontSize="10"/>
                                                         </Border>
                                                         <ControlTemplate.Triggers>
@@ -716,7 +716,7 @@
 
 
                 <Grid Grid.Row="4" Margin="0,10,0,0">
-                    <TextBlock Text="zapret engine В· open source" Foreground="#12FFFFFF"
+                    <TextBlock Text="zapret engine · open source" Foreground="#12FFFFFF"
                                FontFamily="Segoe UI Variable,Segoe UI" FontSize="10"
                                VerticalAlignment="Center"/>
                     <Button Click="Btn_Uninstall" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Cursor="Hand">
@@ -726,7 +726,7 @@
                                     <Setter.Value>
                                         <ControlTemplate TargetType="Button">
                                             <Border x:Name="unBd" CornerRadius="6" Padding="10,4" Background="#00FFFFFF">
-                                                <TextBlock x:Name="unTxt" Text="СѓРґР°Р»РёС‚СЊ" Foreground="#18FFFFFF" FontSize="10.5"
+                                                <TextBlock x:Name="unTxt" Text="удалить" Foreground="#18FFFFFF" FontSize="10.5"
                                                            FontFamily="Segoe UI Variable,Segoe UI"/>
                                             </Border>
                                             <ControlTemplate.Triggers>

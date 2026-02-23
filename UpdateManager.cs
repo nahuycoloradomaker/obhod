@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -31,8 +31,8 @@ namespace obhod
                 if (latestVersion > currentVersion)
                 {
                     var result = MessageBox.Show(
-                        $"Р”РѕСЃС‚СѓРїРЅР° РЅРѕРІР°СЏ РІРµСЂСЃРёСЏ {release.TagName}!\n\nРҐРѕС‚РёС‚Рµ РѕР±РЅРѕРІРёС‚СЊСЃСЏ СЃРµР№С‡Р°СЃ? РџСЂРёР»РѕР¶РµРЅРёРµ Р±СѓРґРµС‚ РїРµСЂРµР·Р°РїСѓС‰РµРЅРѕ.",
-                        "РћР±РЅРѕРІР»РµРЅРёРµ",
+                        $"Доступна новая версия {release.TagName}!\n\nХотите обновиться сейчас? Приложение будет перезапущено.",
+                        "Обновление",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Information);
 
@@ -97,7 +97,7 @@ del ""%~f0""
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё: {ex.Message}", "РћС€РёР±РєР°", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка при обновлении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -55,7 +55,7 @@ public class BypassEngine : IDisposable
     {
         try
         {
-            _log("РР·РІР»РµРєР°СЋ С„Р°Р№Р»С‹...", LogLevel.Info);
+            _log("Извлекаю файлы...", LogLevel.Info);
 
             string? dir = null;
             try
@@ -64,13 +64,13 @@ public class BypassEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _log($"РћС€РёР±РєР° РёР·РІР»РµС‡РµРЅРёСЏ: {ex.Message}", LogLevel.Error);
+                _log($"Ошибка извлечения: {ex.Message}", LogLevel.Error);
                 return false;
             }
 
             if (dir == null)
             {
-                _log("РќРµ СѓРґР°Р»РѕСЃСЊ РёР·РІР»РµС‡СЊ С„Р°Р№Р»С‹.", LogLevel.Error);
+                _log("Не удалось извлечь файлы.", LogLevel.Error);
                 return false;
             }
 
@@ -79,11 +79,11 @@ public class BypassEngine : IDisposable
 
             if (!File.Exists(winws))
             {
-                _log("obhod_core.exe РЅРµ РЅР°Р№РґРµРЅ.", LogLevel.Error);
+                _log("obhod_core.exe не найден.", LogLevel.Error);
                 return false;
             }
 
-            _log("Р¤РѕСЂРјРёСЂСѓСЋ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ...", LogLevel.Info);
+            _log("Формирую конфигурацию...", LogLevel.Info);
 
             string args;
             try
@@ -92,17 +92,17 @@ public class BypassEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _log($"РћС€РёР±РєР° С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ Р°СЂРіСѓРјРµРЅС‚РѕРІ: {ex.Message}", LogLevel.Error);
+                _log($"Ошибка формирования аргументов: {ex.Message}", LogLevel.Error);
                 return false;
             }
 
             if (string.IsNullOrEmpty(args))
             {
-                _log("РџСѓСЃС‚Р°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ.", LogLevel.Error);
+                _log("Пустая конфигурация.", LogLevel.Error);
                 return false;
             }
 
-            _log("Р—Р°РїСѓСЃРєР°СЋ РґРІРёР¶РѕРє...", LogLevel.Info);
+            _log("Запускаю движок...", LogLevel.Info);
 
             bool ok;
             try
@@ -111,20 +111,20 @@ public class BypassEngine : IDisposable
             }
             catch (Exception ex)
             {
-                _log($"РћС€РёР±РєР° Р·Р°РїСѓСЃРєР° РґРІРёР¶РєР°: {ex.Message}", LogLevel.Error);
+                _log($"Ошибка запуска движка: {ex.Message}", LogLevel.Error);
                 return false;
             }
 
             if (ok)
-                _log("РћР±С…РѕРґ Р°РєС‚РёРІРµРЅ.", LogLevel.Success);
+                _log("Обход активен.", LogLevel.Success);
             else
-                _log("Р”РІРёР¶РѕРє РЅРµ Р·Р°РїСѓСЃС‚РёР»СЃСЏ. РџСЂРѕРІРµСЂСЊС‚Рµ РїСЂР°РІР° Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°.", LogLevel.Error);
+                _log("Движок не запустился. Проверьте права администратора.", LogLevel.Error);
 
             return ok;
         }
         catch (Exception ex)
         {
-            _log($"РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР°: {ex.Message}", LogLevel.Error);
+            _log($"Непредвиденная ошибка: {ex.Message}", LogLevel.Error);
             return false;
         }
     }
@@ -133,14 +133,14 @@ public class BypassEngine : IDisposable
     {
         try
         {
-            _log("РћСЃС‚Р°РЅР°РІР»РёРІР°СЋ...", LogLevel.Info);
+            _log("Останавливаю...", LogLevel.Info);
             await _procManager.StopAllAsync();
             Cleanup();
-            _log("РЎРµС‚СЊ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅР°.", LogLevel.Success);
+            _log("Сеть восстановлена.", LogLevel.Success);
         }
         catch (Exception ex)
         {
-            _log($"РћС€РёР±РєР°: {ex.Message}", LogLevel.Warn);
+            _log($"Ошибка: {ex.Message}", LogLevel.Warn);
         }
     }
 
@@ -169,7 +169,7 @@ public class BypassEngine : IDisposable
             using var stream = asm.GetManifestResourceStream(res);
             if (stream == null)
             {
-                _log($"Р РµСЃСѓСЂСЃ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚: {name}", LogLevel.Warn);
+                _log($"Ресурс отсутствует: {name}", LogLevel.Warn);
                 continue;
             }
             using var fs = File.Create(path);
