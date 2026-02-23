@@ -28,29 +28,36 @@
             </Border.Effect>
 
             <Grid>
-                <!-- SVG Shield drawing animation -->
-                <Canvas Width="120" Height="140" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-80,0,0">
-                    <!-- Shield outline - draws itself -->
-                    <Path x:Name="ShieldPath" 
-                          Data="M60,5 L110,30 L110,75 C110,110 60,135 60,135 C60,135 10,110 10,75 L10,30 Z"
-                          Stroke="#3B52CC" StrokeThickness="2" Fill="Transparent"
-                          StrokeDashArray="500" StrokeDashOffset="500"
-                          StrokeLineJoin="Round">
+                <!-- App Logo SVG draw animation -->
+                <Canvas Width="120" Height="120" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-80,0,0">
+                    <!-- Circle arc (the "obhod" orbit) - draws itself -->
+                    <Path x:Name="CirclePath"
+                          Data="M60,10 A50,50 0 1,0 110,60"
+                          Stroke="#3B52CC" StrokeThickness="3" Fill="Transparent"
+                          StrokeDashArray="400" StrokeDashOffset="400"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round">
                         <Path.Effect>
-                            <DropShadowEffect Color="#5C7CFF" BlurRadius="8" ShadowDepth="0" Opacity="0.4"/>
+                            <DropShadowEffect Color="#5C7CFF" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
                         </Path.Effect>
                     </Path>
 
-                    <!-- Inner shield fill (fades in after draw) -->
-                    <Path x:Name="ShieldFill"
-                          Data="M60,12 L105,34 L105,75 C105,106 60,128 60,128 C60,128 15,106 15,75 L15,34 Z"
-                          Fill="#08FFFFFF" Opacity="0"/>
-
-                    <!-- Checkmark inside shield - draws after shield -->
-                    <Path x:Name="CheckPath"
-                          Data="M38,72 L52,86 L82,52"
+                    <!-- Arrow (diagonal break-through line) - draws after circle -->
+                    <Path x:Name="ArrowPath"
+                          Data="M60,60 L105,15"
                           Stroke="White" StrokeThickness="3" Fill="Transparent"
                           StrokeDashArray="200" StrokeDashOffset="200"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          Opacity="0">
+                        <Path.Effect>
+                            <DropShadowEffect Color="#5C7CFF" BlurRadius="6" ShadowDepth="0" Opacity="0.3"/>
+                        </Path.Effect>
+                    </Path>
+
+                    <!-- Arrow tip -->
+                    <Path x:Name="ArrowTip"
+                          Data="M95,15 L105,15 L105,25"
+                          Stroke="White" StrokeThickness="3" Fill="Transparent"
+                          StrokeDashArray="100" StrokeDashOffset="100"
                           StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
                           Opacity="0">
                         <Path.Effect>
@@ -110,21 +117,25 @@
                         <ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction>
                     </ThicknessAnimation>
 
-                    <!-- Shield draws itself (0.3s → 1.3s) -->
-                    <DoubleAnimation Storyboard.TargetName="ShieldPath" Storyboard.TargetProperty="StrokeDashOffset"
-                                     From="500" To="0" BeginTime="0:0:0.3" Duration="0:0:1">
+                    <!-- Circle arc draws itself (0.3s → 1.3s) -->
+                    <DoubleAnimation Storyboard.TargetName="CirclePath" Storyboard.TargetProperty="StrokeDashOffset"
+                                     From="400" To="0" BeginTime="0:0:0.3" Duration="0:0:1">
                         <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <!-- Shield fill fades in -->
-                    <DoubleAnimation Storyboard.TargetName="ShieldFill" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:1" Duration="0:0:0.4"/>
+                    <!-- Arrow line appears and draws -->
+                    <DoubleAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" BeginTime="0:0:1.2" Duration="0:0:0.1"/>
+                    <DoubleAnimation Storyboard.TargetName="ArrowPath" Storyboard.TargetProperty="StrokeDashOffset"
+                                     From="200" To="0" BeginTime="0:0:1.2" Duration="0:0:0.4">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
 
-                    <!-- Checkmark appears and draws -->
-                    <DoubleAnimation Storyboard.TargetName="CheckPath" Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1" BeginTime="0:0:1.4" Duration="0:0:0.1"/>
-                    <DoubleAnimation Storyboard.TargetName="CheckPath" Storyboard.TargetProperty="StrokeDashOffset"
-                                     From="200" To="0" BeginTime="0:0:1.4" Duration="0:0:0.5">
+                    <!-- Arrow tip draws -->
+                    <DoubleAnimation Storyboard.TargetName="ArrowTip" Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" BeginTime="0:0:1.5" Duration="0:0:0.1"/>
+                    <DoubleAnimation Storyboard.TargetName="ArrowTip" Storyboard.TargetProperty="StrokeDashOffset"
+                                     From="100" To="0" BeginTime="0:0:1.5" Duration="0:0:0.3">
                         <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
