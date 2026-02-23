@@ -1,4 +1,0 @@
-github version v72.9 (c849e55ef0f1c244206f5a05ff7b1ab41a3824ee)
-
-we have 8 user defined desync profile(s) and default low priority profile 0
-windivert: error opening filter: A device which does not exist was specified.

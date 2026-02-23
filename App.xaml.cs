@@ -32,9 +32,23 @@ public partial class App : Application
 
     private async Task ShowSplashAndStart()
     {
-        await SplashWindow.ShowAndLoad();
+        // Отключаем автоматическое закрытие при закрытии первого окна
+        Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+        var splash = new SplashWindow();
+        splash.Show();
+        
+        // Время на "полюбоваться" неонкой
+        await Task.Delay(3500);
+        
         var main = new MainWindow();
+        Current.MainWindow = main;
         main.Show();
+        
+        splash.Close();
+
+        // Возвращаем нормальный режим: выход при закрытии главного окна
+        Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
     }
 
     private static bool IsAdmin()

@@ -1,54 +1,69 @@
 <Window x:Class="obhod.SplashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SplashWindow" Height="300" Width="500"
+        Title="obhod" Height="300" Width="600"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False">
+        WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="True">
     <Grid>
-        <Border CornerRadius="20" Background="#0A0A0A" BorderBrush="#FF5E00" BorderThickness="1">
-            <Border.Effect>
-                <DropShadowEffect Color="#FF5E00" BlurRadius="25" ShadowDepth="0" Opacity="0.5"/>
-            </Border.Effect>
+        <!-- Текст с многослойным свечением -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid>
-                <!-- Neon Background Glow -->
-                <Ellipse Fill="#FF5E00" Opacity="0.05" Margin="-50">
-                    <Ellipse.Effect>
-                        <BlurEffect Radius="100"/>
-                    </Ellipse.Effect>
-                </Ellipse>
+                <!-- Слой 1: Размытый фон (оранжевое облако) -->
+                <TextBlock Text="OBHOD" FontSize="72" FontWeight="Black" Foreground="#FF5E00" Opacity="0.3" HorizontalAlignment="Center">
+                    <TextBlock.Effect>
+                        <BlurEffect Radius="40"/>
+                    </TextBlock.Effect>
+                </TextBlock>
 
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="OBHOD" FontSize="48" FontWeight="Black" Foreground="White" HorizontalAlignment="Center">
-                        <TextBlock.Effect>
-                            <DropShadowEffect Color="#FF5E00" BlurRadius="10" ShadowDepth="0"/>
-                        </TextBlock.Effect>
-                    </TextBlock>
-                    
-                    <TextBlock Text="PREMIUM BYPASS ENGINE" FontSize="12" Foreground="#888" Margin="0,10,0,0" HorizontalAlignment="Center"/>
-                    
-                    <Grid Width="200" Height="2" Background="#222" Margin="0,30,0,0">
-                        <Rectangle x:Name="ProgressBar" Width="0" HorizontalAlignment="Left" Fill="#FF5E00">
-                            <Rectangle.Effect>
-                                <DropShadowEffect Color="#FF5E00" BlurRadius="10" ShadowDepth="0"/>
-                            </Rectangle.Effect>
-                        </Rectangle>
-                    </Grid>
-                </StackPanel>
+                <!-- Слой 2: Основное неоновое свечение -->
+                <TextBlock Text="OBHOD" FontSize="72" FontWeight="Black" Foreground="#FF5E00" HorizontalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FF5E00" BlurRadius="30" ShadowDepth="0" Opacity="1"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <!-- Слой 3: Белое ядро (эффект раскаленного газа) -->
+                <TextBlock Text="OBHOD" FontSize="72" FontWeight="Black" Foreground="White" HorizontalAlignment="Center">
+                    <TextBlock.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="White" Offset="0.3"/>
+                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.OpacityMask>
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="White" BlurRadius="5" ShadowDepth="0" Opacity="0.5"/>
+                    </TextBlock.Effect>
+                </TextBlock>
             </Grid>
-        </Border>
+            
+            <TextBlock Text="INITIALIZING SECURE TUNNEL" FontSize="10" Foreground="#666" FontWeight="Bold" 
+                       HorizontalAlignment="Center" Margin="0,10,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.2" To="0.8" Duration="0:0:1" AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 
     <Window.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">
             <BeginStoryboard>
                 <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="ProgressBar" Storyboard.TargetProperty="Width"
-                                   From="0" To="200" Duration="0:0:2.5">
-                        <DoubleAnimation.EasingFunction>
-                            <CubicEase EasingMode="EaseInOut"/>
-                        </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+                    <!-- Плавное появление всего окна -->
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8"/>
+                    
+                    <!-- Эффект "мерцания" неона при включении -->
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.5" To="1" BeginTime="0:0:0.8" Duration="0:0:0.1" AutoReverse="True" RepeatBehavior="2x"/>
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
