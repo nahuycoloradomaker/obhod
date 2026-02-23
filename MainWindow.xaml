@@ -399,10 +399,17 @@
                                                 <Trigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="Background.Color" To="#16FFFFFF" Duration="0:0:0.15"/>
+                                                            <DoubleAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.15"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -479,9 +486,9 @@
                                                 <Trigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="Background.Color" To="#261012" Duration="0:0:0.25"/>
-                                                            <ColorAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="BorderBrush.Color" To="#AA2525" Duration="0:0:0.25"/>
-                                                            <ColorAnimation Storyboard.TargetName="txt" Storyboard.TargetProperty="Foreground.Color" To="#FF4848" Duration="0:0:0.25"/>
+                                                            <ColorAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="Background.Color" To="#101A26" Duration="0:0:0.25"/>
+                                                            <ColorAnimation Storyboard.TargetName="bd" Storyboard.TargetProperty="BorderBrush.Color" To="#255A88" Duration="0:0:0.25"/>
+                                                            <ColorAnimation Storyboard.TargetName="txt" Storyboard.TargetProperty="Foreground.Color" To="#48AFFF" Duration="0:0:0.25"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </Trigger.EnterActions>
