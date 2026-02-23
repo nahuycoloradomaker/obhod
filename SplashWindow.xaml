@@ -28,42 +28,44 @@
             </Border.Effect>
 
             <Grid>
-                <!-- App Logo SVG draw animation -->
-                <Canvas Width="120" Height="120" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-80,0,0">
-                    <!-- Circle arc - white -->
-                    <Path x:Name="CirclePath"
-                          Data="M60,10 A50,50 0 1,0 110,60"
-                          Stroke="#D0D0E0" StrokeThickness="2.5" Fill="Transparent"
-                          StrokeDashArray="400" StrokeDashOffset="400"
-                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                <!-- Logo + Text stacked vertically with proper spacing -->
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                    <!-- App Logo SVG draw animation - BIG -->
+                    <Canvas Width="160" Height="160" HorizontalAlignment="Center">
+                        <!-- Circle arc -->
+                        <Path x:Name="CirclePath"
+                              Data="M80,10 A70,70 0 1,0 150,80"
+                              Stroke="#E0E0F0" StrokeThickness="4" Fill="Transparent"
+                              StrokeDashArray="500" StrokeDashOffset="500"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
 
-                    <!-- Diagonal line -->
-                    <Path x:Name="ArrowPath"
-                          Data="M60,60 L105,15"
-                          Stroke="#D0D0E0" StrokeThickness="2.5" Fill="Transparent"
-                          StrokeDashArray="200" StrokeDashOffset="200"
-                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
-                          Opacity="0"/>
-                </Canvas>
+                        <!-- Diagonal line -->
+                        <Path x:Name="ArrowPath"
+                              Data="M80,80 L145,15"
+                              Stroke="#E0E0F0" StrokeThickness="4" Fill="Transparent"
+                              StrokeDashArray="200" StrokeDashOffset="200"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                              Opacity="0"/>
+                    </Canvas>
 
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,100,0,0">
                     <!-- Title -->
-                    <TextBlock x:Name="TitleText" Text="obhod" FontSize="28" FontWeight="Bold" 
-                               Foreground="#E0E0F0" HorizontalAlignment="Center" 
+                    <TextBlock x:Name="TitleText" Text="obhod" FontSize="32" FontWeight="Bold" 
+                               Foreground="#E0E0F0" HorizontalAlignment="Center" Margin="0,20,0,0"
                                FontFamily="Segoe UI Variable,Segoe UI" Opacity="0"/>
 
                     <!-- Version badge -->
                     <Border x:Name="VersionBadge" CornerRadius="4" Background="#08FFFFFF" BorderBrush="#10FFFFFF" 
-                            BorderThickness="1" Padding="8,2" Margin="0,8,0,0" HorizontalAlignment="Center" Opacity="0">
+                            BorderThickness="1" Padding="10,3" Margin="0,10,0,0" HorizontalAlignment="Center" Opacity="0">
                         <TextBlock Text="v1.2 · premium bypass" FontSize="10" Foreground="#30FFFFFF" 
                                    FontWeight="Medium" FontFamily="Segoe UI Variable,Segoe UI"/>
                     </Border>
 
                     <!-- Minimal spinning ring loader -->
-                    <Grid Width="18" Height="18" Margin="0,28,0,0" HorizontalAlignment="Center">
-                        <Ellipse Width="18" Height="18" Stroke="#0CFFFFFF" StrokeThickness="1.5" Fill="Transparent"/>
-                        <Path x:Name="Spinner" Data="M9,0 A9,9 0 0,1 18,9" 
-                              Stroke="#50FFFFFF" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                    <Grid Width="20" Height="20" Margin="0,35,0,0" HorizontalAlignment="Center">
+                        <Ellipse Width="20" Height="20" Stroke="#0CFFFFFF" StrokeThickness="1.5" Fill="Transparent"/>
+                        <Path x:Name="Spinner" Data="M10,0 A10,10 0 0,1 20,10" 
+                              Stroke="#40FFFFFF" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                               RenderTransformOrigin="0.5,0.5">
                             <Path.RenderTransform>
                                 <RotateTransform x:Name="SpinnerRotate" Angle="0"/>
@@ -99,7 +101,7 @@
 
                     <!-- Circle arc draws smoothly -->
                     <DoubleAnimation Storyboard.TargetName="CirclePath" Storyboard.TargetProperty="StrokeDashOffset"
-                                     From="400" To="0" BeginTime="0:0:0.2" Duration="0:0:0.8">
+                                     From="500" To="0" BeginTime="0:0:0.2" Duration="0:0:0.8">
                         <DoubleAnimation.EasingFunction><QuarticEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
