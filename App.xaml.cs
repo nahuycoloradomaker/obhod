@@ -25,7 +25,16 @@ public partial class App : Application
             Shutdown();
             return;
         }
-        base.OnStartup(e);
+
+        // Показываем неоновое интро
+        _ = ShowSplashAndStart();
+    }
+
+    private async Task ShowSplashAndStart()
+    {
+        await SplashWindow.ShowAndLoad();
+        var main = new MainWindow();
+        main.Show();
     }
 
     private static bool IsAdmin()

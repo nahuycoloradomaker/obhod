@@ -480,3 +480,6 @@ E:\obhod\obj\Release\net8.0-windows\win-x64\obhod.genruntimeconfig.cache
 E:\obhod\obj\Release\net8.0-windows\win-x64\ref\obhod.dll
 E:\obhod\bin\Release\net8.0-windows\win-x64\System.IO.Pipelines.dll
 E:\obhod\obj\Release\net8.0-windows\win-x64\obhod.csproj.AssemblyReference.cache
+E:\obhod\obj\Release\net8.0-windows\win-x64\SplashWindow.baml
+E:\obhod\obj\Release\net8.0-windows\win-x64\SplashWindow.g.cs
+E:\obhod\obj\Release\net8.0-windows\win-x64\obhod.sourcelink.json
