@@ -28,7 +28,13 @@ public class BypassEngine : IDisposable
         "discord-activities.com", "discordactivities.com", "discordmerch.com",
         "discordpartygames.com", "discordsays.com", "discordsez.com", "discordstatus.com",
         "dis.gd", "discord-attachments-uploads-prd.storage.googleapis.com",
-        "stable.dl2.discordapp.net"
+        "stable.dl2.discordapp.net", "cloudflare-ech.com", "encryptedsni.com", "cloudflareaccess.com",
+        "cloudflareapps.com", "cloudflarebolt.com", "cloudflareclient.com",
+        "cloudflareinsights.com", "cloudflareok.com", "cloudflarepartners.com",
+        "cloudflareportal.com", "cloudflarepreview.com", "cloudflareresolve.com",
+        "cloudflaressl.com", "cloudflarestatus.com", "cloudflarestorage.com",
+        "cloudflarestream.com", "cloudflaretest.com", "frankerfacez.com",
+        "ffzap.com", "betterttv.net", "7tv.app", "7tv.io", "localizeapi.com"
     );
 
     private static readonly string YouTubeDomains = string.Join(",",
@@ -347,13 +353,7 @@ public class BypassEngine : IDisposable
 
         if (hasRoblox)
         {
-            strategies.Add(
-                "--filter-tcp=443 " +
-                $"--hostlist-domains={RobloxDomains} " +
-                "--dpi-desync=multisplit --dpi-desync-split-seqovl=681 " +
-                "--dpi-desync-split-pos=1 " +
-                $"--dpi-desync-split-seqovl-pattern={tlsG}"
-            );
+            // removed bad tlsG logic (breaks fastly)
 
             strategies.Add(
                 "--filter-tcp=80,443 " +

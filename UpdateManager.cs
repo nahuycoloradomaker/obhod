@@ -109,7 +109,7 @@ del ""%~f0""
             }
         }
 
-        private class GithubRelease
+        public class GithubRelease
         {
             [JsonPropertyName("tag_name")]
             public string TagName { get; set; } = "";
@@ -118,7 +118,7 @@ del ""%~f0""
             public GithubAsset[] Assets { get; set; } = Array.Empty<GithubAsset>();
         }
 
-        private class GithubAsset
+        public class GithubAsset
         {
             [JsonPropertyName("name")]
             public string Name { get; set; } = "";
