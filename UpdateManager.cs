@@ -62,42 +62,65 @@ namespace obhod
         {
             try
             {
-                string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+                // Используем уникальное имя для временного файла в папке загрузок или темпе
+                string tempPath = Path.Combine(Path.GetTempPath(), $"obhod_new_{Guid.NewGuid():N}.exe");
                 
-                using (var client = new HttpClient())
+                using (var hClient = new HttpClient())
                 {
-                    client.Timeout = TimeSpan.FromMinutes(5);
-                    var data = await client.GetByteArrayAsync(url);
+                    hClient.Timeout = TimeSpan.FromMinutes(5);
+                    hClient.DefaultRequestHeaders.Add("User-Agent", "obhod-updater");
+                    
+                    var data = await hClient.GetByteArrayAsync(url);
                     await File.WriteAllBytesAsync(tempPath, data);
                 }
 
                 string currentExe = Process.GetCurrentProcess().MainModule?.FileName ?? "";
-                if (string.IsNullOrEmpty(currentExe)) return;
+                if (string.IsNullOrEmpty(currentExe)) 
+                {
+                    CustomDialog.ShowDialog("Ошибка", "Не удалось определить путь к текущему файлу.");
+                    return;
+                }
 
                 string batchPath = Path.Combine(Path.GetTempPath(), "update_obhod.bat");
+
+                // Улучшенный батник: 
+                // 1. Убиваем все процессы obhod.exe
+                // 2. В цикле пытаемся удалить старый файл (ждем пока разлочится)
+                // 3. Перемещаем новый файл на место старого
+                // 4. Запускаем новый
+                // 5. Самоудаляемся
                 string batchContent = $@"
 @echo off
-timeout /t 2 /nobreak > nul
-:loop
+chcp 65001 > nul
+timeout /t 1 /nobreak > nul
+
+:kill_loop
 taskkill /f /im obhod.exe > nul 2>&1
 timeout /t 1 /nobreak > nul
-del ""{currentExe}""
+
+:del_loop
+del /f /q ""{currentExe}"" > nul 2>&1
 if exist ""{currentExe}"" (
     timeout /t 1 /nobreak > nul
-    goto loop
+    goto del_loop
 )
-move /y ""{tempPath}"" ""{currentExe}""
+
+move /y ""{tempPath}"" ""{currentExe}"" > nul 2>&1
+if not exist ""{currentExe}"" (
+    copy /y ""{tempPath}"" ""{currentExe}"" > nul 2>&1
+)
+
 start """" ""{currentExe}""
 del ""%~f0""
 ";
-                await File.WriteAllTextAsync(batchPath, batchContent);
+                await File.WriteAllTextAsync(batchPath, batchContent, System.Text.Encoding.GetEncoding(866));
 
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
                     Arguments = $"/c \"{batchPath}\"",
                     CreateNoWindow = true,
-                    UseShellExecute = false
+                    UseShellExecute = true // Важно для запуска батника отдельно
                 });
 
                 Application.Current.Shutdown();
