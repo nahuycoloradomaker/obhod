@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -21,18 +22,21 @@ namespace obhod
             {
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("User-Agent", "obhod-updater");
+                client.Timeout = TimeSpan.FromSeconds(10);
 
                 var release = await client.GetFromJsonAsync<GithubRelease>(API_URL);
                 if (release == null || string.IsNullOrEmpty(release.TagName)) return;
 
-                Version latestVersion = Version.Parse(release.TagName.TrimStart('v'));
+                string tagClean = release.TagName.TrimStart('v');
+                if (!Version.TryParse(tagClean, out var latestVersion)) return;
+
                 Version currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0);
 
                 if (latestVersion > currentVersion)
                 {
                     var result = MessageBox.Show(
                         $"Доступна новая версия {release.TagName}!\n\nХотите обновиться сейчас? Приложение будет перезапущено.",
-                        "Обновление",
+                        "Обновление obhod",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Information);
 
@@ -42,10 +46,11 @@ namespace obhod
                         {
                             if (asset.Name.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
                             {
-                                await PerformUpdate(asset.BrowserDownloadUrl, asset.Name);
-                                break;
+                                await PerformUpdate(asset.DownloadUrl, asset.Name);
+                                return;
                             }
                         }
+                        MessageBox.Show("exe не найден в релизе.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }
@@ -62,6 +67,7 @@ namespace obhod
                 
                 using (var client = new HttpClient())
                 {
+                    client.Timeout = TimeSpan.FromMinutes(5);
                     var data = await client.GetByteArrayAsync(url);
                     await File.WriteAllBytesAsync(tempPath, data);
                 }
@@ -72,8 +78,10 @@ namespace obhod
                 string batchPath = Path.Combine(Path.GetTempPath(), "update_obhod.bat");
                 string batchContent = $@"
 @echo off
-timeout /t 1 /nobreak > nul
+timeout /t 2 /nobreak > nul
 :loop
+taskkill /f /im obhod.exe > nul 2>&1
+timeout /t 1 /nobreak > nul
 del ""{currentExe}""
 if exist ""{currentExe}"" (
     timeout /t 1 /nobreak > nul
@@ -103,14 +111,20 @@ del ""%~f0""
 
         private class GithubRelease
         {
+            [JsonPropertyName("tag_name")]
             public string TagName { get; set; } = "";
+
+            [JsonPropertyName("assets")]
             public GithubAsset[] Assets { get; set; } = Array.Empty<GithubAsset>();
         }
 
         private class GithubAsset
         {
+            [JsonPropertyName("name")]
             public string Name { get; set; } = "";
-            public string BrowserDownloadUrl { get; set; } = "";
+
+            [JsonPropertyName("browser_download_url")]
+            public string DownloadUrl { get; set; } = "";
         }
     }
 }

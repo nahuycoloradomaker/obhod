@@ -100,6 +100,9 @@ public class BypassEngine : IDisposable
     {
         try
         {
+            _log("Настраиваю DNS...", LogLevel.Info);
+            try { DnsManager.EnableSecureDns(_log); } catch { }
+
             _log("Извлекаю файлы...", LogLevel.Info);
 
             string? dir = null;
@@ -180,6 +183,7 @@ public class BypassEngine : IDisposable
         {
             _log("Останавливаю...", LogLevel.Info);
             await _procManager.StopAllAsync();
+            try { DnsManager.DisableSecureDns(_log); } catch { }
             Cleanup();
             _log("Сеть восстановлена.", LogLevel.Success);
         }
