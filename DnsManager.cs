@@ -187,6 +187,18 @@ public static class DnsManager
             }
         }
         catch { }
+
+        try
+        {
+            using var key = Registry.LocalMachine.OpenSubKey(
+                @"SYSTEM\CurrentControlSet\Services\Dnscache\Parameters", true);
+            if (key != null)
+            {
+                // 0 = отключено или по умолчанию
+                key.SetValue("EnableAutoDoh", 0, RegistryValueKind.DWord);
+            }
+        }
+        catch { }
     }
 
     private static void RunNetsh(string args, Action<string, LogLevel> log)
