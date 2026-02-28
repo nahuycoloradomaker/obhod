@@ -252,8 +252,8 @@ public class BypassEngine : IDisposable
 
         if (hasDiscord)
         {
-            wfPortsTcp.UnionWith(new[] { "80", "443", "2053", "2083", "2087", "2096", "8443" });
-            wfPortsUdp.UnionWith(new[] { "443", "19294-19344", "50000-50100" });
+            wfPortsTcp.UnionWith(new[] { "80", "443", "8443" });
+            wfPortsUdp.UnionWith(new[] { "443", "50000-65535" });
         }
         if (hasYoutube || hasHttps)
         {
@@ -262,7 +262,7 @@ public class BypassEngine : IDisposable
         }
         if (hasRoblox)
         {
-            wfPortsTcp.UnionWith(new[] { "80", "443", "1024-65535" });
+            wfPortsTcp.UnionWith(new[] { "80", "443" });
             wfPortsUdp.UnionWith(new[] { "443", "1024-65535" });
         }
         if (hasQuic)
@@ -292,22 +292,14 @@ public class BypassEngine : IDisposable
                 $"--dpi-desync-fake-quic={quic}"
             );
 
+            // Голосовые пакеты Discord идут по UDP без доменных имен, фильтр портов
             strategies.Add(
-                "--filter-udp=19294-19344,50000-50100 " +
-                "--filter-l7=discord,stun " +
-                "--dpi-desync=fake --dpi-desync-repeats=6"
+                "--filter-udp=50000-65535 " +
+                "--dpi-desync=fake --dpi-desync-any-protocol=1 --dpi-desync-cutoff=n3 --dpi-desync-repeats=6"
             );
 
             strategies.Add(
-                "--filter-tcp=2053,2083,2087,2096,8443 " +
-                "--hostlist-domains=discord.media " +
-                "--dpi-desync=multisplit --dpi-desync-split-seqovl=681 " +
-                "--dpi-desync-split-pos=1 " +
-                $"--dpi-desync-split-seqovl-pattern={tlsG}"
-            );
-
-            strategies.Add(
-                "--filter-tcp=80,443 " +
+                "--filter-tcp=80,443,8443 " +
                 $"--hostlist-domains={DiscordDomains} " +
                 "--dpi-desync=multisplit --dpi-desync-split-seqovl=568 " +
                 "--dpi-desync-split-pos=1 " +
@@ -353,21 +345,11 @@ public class BypassEngine : IDisposable
 
         if (hasRoblox)
         {
-            // removed bad tlsG logic (breaks fastly)
-
             strategies.Add(
                 "--filter-tcp=80,443 " +
                 $"--hostlist-domains={RobloxDomains} " +
                 "--dpi-desync=multisplit --dpi-desync-split-seqovl=568 " +
                 "--dpi-desync-split-pos=1 " +
-                $"--dpi-desync-split-seqovl-pattern={tls4}"
-            );
-
-            strategies.Add(
-                "--filter-tcp=1024-65535 " +
-                $"--hostlist-domains={RobloxDomains} " +
-                "--dpi-desync=multisplit --dpi-desync-any-protocol=1 --dpi-desync-cutoff=n3 " +
-                "--dpi-desync-split-seqovl=568 --dpi-desync-split-pos=1 " +
                 $"--dpi-desync-split-seqovl-pattern={tls4}"
             );
 
@@ -378,11 +360,12 @@ public class BypassEngine : IDisposable
                 $"--dpi-desync-fake-quic={quic}"
             );
 
+            // Игровые пакеты Roblox идут по огромному спектру UDP портов без доменных заголовков
+            // Если тут использовать hostlist-domains, заплет не сможет определить домен и проигнорирует пакет
             strategies.Add(
                 "--filter-udp=1024-65535 " +
-                $"--hostlist-domains={RobloxDomains} " +
                 "--dpi-desync=fake --dpi-desync-repeats=12 --dpi-desync-any-protocol=1 " +
-                $"--dpi-desync-fake-unknown-udp={quic} --dpi-desync-cutoff=n2"
+                $"--dpi-desync-fake-unknown-udp={quic} --dpi-desync-cutoff=n3"
             );
         }
 
