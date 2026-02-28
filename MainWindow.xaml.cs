@@ -20,7 +20,7 @@ public partial class MainWindow : Window
         _engine = new BypassEngine(Log);
         Closing += OnClose;
         UpdatePresetLabel();
-        Log("obhod готов к работе.", LogLevel.Info);
+        Log("obhod v2.0 готов к работе.", LogLevel.Info);
         
         _ = UpdateManager.CheckForUpdatesAsync();
     }
@@ -86,7 +86,8 @@ public partial class MainWindow : Window
         {
             _running = true;
             MainToggle.IsChecked = true;
-            SetStatus(true, "Активен", string.Join(" · ", presets.Select(p => char.ToUpper(p[0]) + p[1..])));
+            string Fmt(string p) => p switch { "ukraine" => "UA→RU", _ => char.ToUpper(p[0]) + p[1..] };
+            SetStatus(true, "Активен", string.Join(" · ", presets.Select(Fmt)));
         }
         else
         {
@@ -143,6 +144,7 @@ public partial class MainWindow : Window
             if (P_Roblox.IsChecked == true) list.Add("roblox");
             if (P_HTTPS.IsChecked == true) list.Add("https");
             if (P_QUIC.IsChecked == true) list.Add("quic");
+            if (P_Ukraine.IsChecked == true) list.Add("ukraine");
         }
         catch { }
         return list;
@@ -153,8 +155,13 @@ public partial class MainWindow : Window
         try
         {
             var active = ActivePresets();
+            string FormatPreset(string p) => p switch
+            {
+                "ukraine" => "UA→RU",
+                _ => char.ToUpper(p[0]) + p[1..]
+            };
             TxtPresetList.Text = active.Count > 0
-                ? string.Join(" · ", active.Select(p => char.ToUpper(p[0]) + p[1..]))
+                ? string.Join(" · ", active.Select(FormatPreset))
                 : "ничего не выбрано";
         }
         catch { }
