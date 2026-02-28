@@ -34,13 +34,12 @@ namespace obhod
 
                 if (latestVersion > currentVersion)
                 {
-                    var result = MessageBox.Show(
-                        $"Доступна новая версия {release.TagName}!\n\nХотите обновиться сейчас? Приложение будет перезапущено.",
+                    bool result = CustomDialog.ShowDialog(
                         "Обновление obhod",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Information);
+                        $"Доступна новая версия {release.TagName}!\n\nХотите обновиться сейчас? Приложение будет перезапущено.",
+                        true);
 
-                    if (result == MessageBoxResult.Yes)
+                    if (result)
                     {
                         foreach (var asset in release.Assets)
                         {
@@ -50,7 +49,7 @@ namespace obhod
                                 return;
                             }
                         }
-                        MessageBox.Show("exe не найден в релизе.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        CustomDialog.ShowDialog("Ошибка", "exe не найден в релизе.");
                     }
                 }
             }
@@ -105,7 +104,7 @@ del ""%~f0""
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при обновлении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomDialog.ShowDialog("Ошибка", $"Ошибка при обновлении: {ex.Message}");
             }
         }
 

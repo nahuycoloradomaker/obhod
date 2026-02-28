@@ -259,7 +259,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (MessageBox.Show("Удалить приложение и сбросить настройки?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (CustomDialog.ShowDialog("Удаление", "Удалить приложение и сбросить настройки?", true))
             {
                 if (_running) await DoStop();
                 _engine.Dispose();
@@ -273,7 +273,7 @@ public partial class MainWindow : Window
                 }
                 catch { }
 
-                MessageBox.Show("Готово.", "obhod", MessageBoxButton.OK, MessageBoxImage.Information);
+                CustomDialog.ShowDialog("obhod", "Готово.");
                 Application.Current.Shutdown();
             }
         }
